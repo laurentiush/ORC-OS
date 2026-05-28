@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types'
 
 import './App.css'
 import { MessageProvider } from './messageContext';
+import { getLocale, setLocale } from './paraglide/runtime.js';
 import Navbar from './nav/Navbar';
 import Footer from './nav/Footer';
 import Login from './views/login';
@@ -82,7 +83,9 @@ const Layout = ({
   setIsLoading,
   videoRunState,
   setVideoRunState,
-  apiStatus
+  apiStatus,
+  locale,
+  changeLocale,
 }) => {
   const location = useLocation();
   const isInvalidRoute = !matchRoute(location.pathname);
@@ -121,6 +124,8 @@ const Layout = ({
         devStatus={devStatus}
         setIsLoading={setIsLoading}
         videoRunState={videoRunState}
+        locale={locale}
+        changeLocale={changeLocale}
       />}
       <div className="main-content">{children}</div>
       {!hideLayout && isDesktop && <Footer
@@ -142,7 +147,12 @@ const App = () => {
       sync_status: 0,
       message: ""
     });
+    const [locale, setLocaleState] = useState(() => getLocale());
 
+    const changeLocale = useCallback((newLocale) => {
+      setLocale(newLocale, { reload: false });
+      setLocaleState(newLocale);
+    }, []);
   // check for API availability
     useEffect(() => {
         let interval;
@@ -206,12 +216,16 @@ const App = () => {
               videoRunState={videoRunState}
               setVideoRunState={setVideoRunState}
               apiStatus={apiStatus}
+              locale={locale}
+              changeLocale={changeLocale}
             >
               <Routes>
                 <Route path="*" element={<div>Snap!! 404 Page Not Found</div>} />
                 <Route path="/login" element={
                   <Login
                     apiStatus={apiStatus}
+                    locale={locale}
+                    changeLocale={changeLocale}
                   />} />
                 <Route path="/" element={
                   <ProtectedRoute>
@@ -331,5 +345,7 @@ Layout.propTypes = {
     message: PropTypes.string
   }),
   setVideoRunState: PropTypes.func.isRequired,
+  locale: PropTypes.string,
+  changeLocale: PropTypes.func,
 };
 export default App

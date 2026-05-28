@@ -27,8 +27,9 @@ import {OptionsMenu} from "./optionsMenu.jsx";
 import {PasswordChangeModal} from "./passwordChangeModal.jsx";
 import api from "../api/api.js";
 import { useAuth } from "../auth/useAuth.jsx";
+import { localeConfig } from "../utils/locales.js";
 
-const Navbar = ({requiresRestart, setRequiresRestart, devStatus, setIsLoading, videoRunState}) => {
+const Navbar = ({requiresRestart, setRequiresRestart, devStatus, setIsLoading, videoRunState, locale, changeLocale}) => {
 
   const [isOpen, setIsOpen] = useState(false); // track if the navbar is open / closed
   const { logout } = useAuth();
@@ -135,6 +136,28 @@ const Navbar = ({requiresRestart, setRequiresRestart, devStatus, setIsLoading, v
           </div>
           <div className="navbar-right">
             <MessageBox/>
+              <span
+                onClick={() => changeLocale(Object.keys(localeConfig)[0])}
+                title={localeConfig[Object.keys(localeConfig)[0]].name}
+                style={{
+                  cursor: 'pointer',
+                  opacity: locale === Object.keys(localeConfig)[0] ? 1 : 0.4,
+                  transition: 'opacity 0.2s',
+                }}
+              >
+              {localeConfig[Object.keys(localeConfig)[0]].flag}
+              </span>
+              <span
+                onClick={() => changeLocale(Object.keys(localeConfig)[1])}
+                title={localeConfig[Object.keys(localeConfig)[1]].name}
+                style={{
+                  cursor: 'pointer',
+                  opacity: locale === Object.keys(localeConfig)[1] ? 1 : 0.4,
+                  transition: 'opacity 0.2s',
+                }}
+              >
+              {localeConfig[Object.keys(localeConfig)[1]].flag}
+              </span>
             <FaSync
 
               className={requiresRestart ? "pulsating-icon" : ""}

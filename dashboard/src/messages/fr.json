@@ -1,0 +1,8 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "password": "mot de passe",
+  "login_congrats_first_use": "Félicitations! C'est votre première utilisation d'ORC-OS! Veuillez définir maintenant un mot de passe.",
+  "login_enter": "Entrez",
+  "login_confirm": "Confirmez",
+  "login_create": "Créez"
+}

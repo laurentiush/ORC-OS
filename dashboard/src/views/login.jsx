@@ -3,10 +3,13 @@ import { useState, useEffect } from "react";
 import { useWindowSize } from "react-use";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/useAuth.jsx";
+import { m } from '../paraglide/messages.js';
+import { locales } from '../paraglide/runtime.js';
+import { localeConfig } from '../utils/locales.js';
 import Confetti from 'react-confetti'
 import orcLogo from "/orc_favicon.svg";
 
-const Login = ({apiStatus}) => {
+const Login = ({ apiStatus, locale, changeLocale }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passAvailable, setPassAvailable] = useState(true);
@@ -51,18 +54,29 @@ const Login = ({apiStatus}) => {
           <img src={orcLogo} className="logo" alt="ORC logo" style={{"height": "300px"}} />
         </a>
       </div>
+      <select
+        value={locale}
+        onChange={(e) => changeLocale(e.target.value)}
+        style={{ marginBottom: "12px" }}
+      >
+        {locales.map((l) => (
+          <option key={l} value={l}>
+            {localeConfig[l].label}
+          </option>
+        ))}
+      </select>
       <div>
         {passAvailable ? (
-      <p style={{textAlign: "center"}}>Please enter your password to proceed</p>) : (
+      <p style={{textAlign: "center"}}>Please enter your {m.password()} to proceed</p>) : (
         <div>
-          <p>Congratulations! This is your first use of ORC-OS! Please set a password now.</p>
+          <p>{m.login_congrats_first_use()}</p>
         </div>)
         }
       </div>
       <form onSubmit={handleLogin} style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
         <input
           type="password"
-          placeholder="Enter password"
+          placeholder={`${m.login_enter()} ${m.password()}`}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
@@ -71,12 +85,12 @@ const Login = ({apiStatus}) => {
           <>
             <input
               type="password"
-              placeholder="Confirm password"
+              placeholder={`${m.login_confirm()} ${m.password()}`}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               style={{ marginTop: "8px" }}
             />
-            <button className="btn btn-primary" type="submit">Create password</button>
+            <button className="btn btn-primary" type="submit">{m.login_create()} {m.password()}</button>
             {confirmPassword.length > 0 && (
               <p style={{ color: passwordsMatch ? "green" : "red", margin: "6px 0" }}>
                 {passwordsMatch ? "Passwords match" : "Passwords do not match"}
