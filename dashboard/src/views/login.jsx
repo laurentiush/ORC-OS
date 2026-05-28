@@ -21,7 +21,6 @@ const Login = ({ apiStatus }) => {
   });
   const navigate = useNavigate();
   const { login, passwordAvailable, setNewPassword } = useAuth();
-  const { width, height } = useWindowSize();
   const { locale, changeLocale } = useLocale();
 
   useEffect(() => {
