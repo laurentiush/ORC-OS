@@ -6,10 +6,12 @@ import { useAuth } from "../auth/useAuth.jsx";
 import { m } from '../paraglide/messages.js';
 import { locales } from '../paraglide/runtime.js';
 import { localeConfig } from '../utils/locales.js';
+import { useLocale } from '../utils/localeContext';
 import Confetti from 'react-confetti'
 import orcLogo from "/orc_favicon.svg";
 
-const Login = ({ apiStatus, locale, changeLocale }) => {
+
+const Login = ({ apiStatus }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passAvailable, setPassAvailable] = useState(true);
@@ -17,6 +19,7 @@ const Login = ({ apiStatus, locale, changeLocale }) => {
   const navigate = useNavigate();
   const { login, passwordAvailable, setNewPassword } = useAuth();
   const { width, height } = useWindowSize();
+  const { locale, changeLocale } = useLocale();
   // upon entering the page, check if a password exists in the database
   useEffect(()  => {
     async function fetchPasswordAvailable() {

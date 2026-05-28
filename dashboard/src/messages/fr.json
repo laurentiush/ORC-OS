@@ -4,5 +4,7 @@
   "login_congrats_first_use": "Félicitations! C'est votre première utilisation d'ORC-OS! Veuillez définir maintenant un mot de passe.",
   "login_enter": "Entrez",
   "login_confirm": "Confirmez",
-  "login_create": "Créez"
+  "login_create": "Créez",
+  "home_last_video": "Dernière vidéo",
+  "home_no_data": "Aucune donnée"
 }

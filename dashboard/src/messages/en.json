@@ -4,5 +4,7 @@
   "login_congrats_first_use": "Congratulations! This is your first use of ORC-OS! Please set a password now.",
   "login_enter": "Enter",
   "login_confirm": "Confirm",
-  "login_create": "Create"
+  "login_create": "Create",
+  "home_last_video": "Last video",
+  "home_no_data": "No data"
 }

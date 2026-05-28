@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import PropTypes from 'prop-types'
 
 import './App.css'
+import { LocaleProvider } from './utils/localeContext';
 import { MessageProvider } from './messageContext';
 import { getLocale, setLocale } from './paraglide/runtime.js';
 import Navbar from './nav/Navbar';
@@ -207,128 +208,128 @@ const App = () => {
     }
     return (
         <MessageProvider>
-          <Router>
-            <Layout
-              requiresRestart={requiresRestart}
-              setRequiresRestart={setRequiresRestart}
-              devStatus={devStatus}
-              setIsLoading={setIsLoading}
-              videoRunState={videoRunState}
-              setVideoRunState={setVideoRunState}
-              apiStatus={apiStatus}
-              locale={locale}
-              changeLocale={changeLocale}
-            >
-              <Routes>
-                <Route path="*" element={<div>Snap!! 404 Page Not Found</div>} />
-                <Route path="/login" element={
-                  <Login
-                    apiStatus={apiStatus}
-                    locale={locale}
-                    changeLocale={changeLocale}
-                  />} />
-                <Route path="/" element={
-                  <ProtectedRoute>
-                     <Home />
-                   </ProtectedRoute>
-                } />
-                <Route path="/device" element={
-                  <ProtectedRoute>
-                    <Device />
-                  </ProtectedRoute>
-                } />
-                <Route path="/updates" element={
-                  <ProtectedRoute>
-                    <Updates
-                      currentVersion={apiStatus?.version}
-                    />
-                  </ProtectedRoute>
-                } />
-                <Route path="/settings" element={
-                  <ProtectedRoute>
-                    <Settings
-                      setRequiresRestart={setRequiresRestart}
-                    />
-                  </ProtectedRoute>
-                } />
-                <Route path="/disk_management" element={
-                  <ProtectedRoute>
-                  <DiskManagement
-                    setRequiresRestart={setRequiresRestart}
-                  />
-                  </ProtectedRoute>
-                } />
-                <Route path="/water_level" element={
-                  <ProtectedRoute>
-                    <WaterLevel
-                      setRequiresRestart={setRequiresRestart}
-                    />
-                  </ProtectedRoute>
-                } />
-                <Route path="/callback_url" element={
-                  <ProtectedRoute>
-                    <CallbackUrl
-                      setRequiresRestart={setRequiresRestart}
-                    />
-                  </ProtectedRoute>
-                } />
-                <Route path="/camera_aim" element={
-                  <ProtectedRoute>
-                    <CameraAim />
-                  </ProtectedRoute>
-                } />
-                <Route path="/video" element={
-                  <ProtectedRoute>
-                    <ListVideo
-                      videoRunState={videoRunState}
-                    />
-                  </ProtectedRoute>
-                } />
-                <Route path="/time_series" element={
-                  <ProtectedRoute>
-                    <TimeSeries
-                    />
-                  </ProtectedRoute>
-                } />
-                <Route path="/video_config/:videoId" element={
-                  <ProtectedRoute>
-                    <VideoConfig
-                      devStatus={devStatus}
-                    />
-                  </ProtectedRoute>
-                } />
-                <Route path="/recipe" element={
-                  <ProtectedRoute>
-                    <ListRecipe />
-                  </ProtectedRoute>
-                } />
-                <Route path="/cross_section" element={
-                  <ProtectedRoute>
-                    <ListCrossSection />
-                  </ProtectedRoute>
-                } />
-                <Route path="/log" element={
-                  <ProtectedRoute>
-                    <Log />
-                  </ProtectedRoute>
-                } />
-                {devStatus && (
-                  <Route path="/services" element={
+          <LocaleProvider locale={locale} changeLocale={changeLocale}>
+            <Router>
+              <Layout
+                requiresRestart={requiresRestart}
+                setRequiresRestart={setRequiresRestart}
+                devStatus={devStatus}
+                setIsLoading={setIsLoading}
+                videoRunState={videoRunState}
+                setVideoRunState={setVideoRunState}
+                apiStatus={apiStatus}
+                locale={locale}
+                changeLocale={changeLocale}
+              >
+                <Routes>
+                  <Route path="*" element={<div>Snap!! 404 Page Not Found</div>} />
+                  <Route path="/login" element={
+                    <Login
+                      apiStatus={apiStatus}
+                    />} />
+                  <Route path="/" element={
                     <ProtectedRoute>
-                      <ServicesAdmin />
+                       <Home />
+                     </ProtectedRoute>
+                  } />
+                  <Route path="/device" element={
+                    <ProtectedRoute>
+                      <Device />
                     </ProtectedRoute>
                   } />
-                )}
-                <Route path="/services/:serviceId" element={
-                  <ProtectedRoute>
-                    <ServiceDetail
-                      devStatus={devStatus}
+                  <Route path="/updates" element={
+                    <ProtectedRoute>
+                      <Updates
+                        currentVersion={apiStatus?.version}
+                      />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/settings" element={
+                    <ProtectedRoute>
+                      <Settings
+                        setRequiresRestart={setRequiresRestart}
+                      />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/disk_management" element={
+                    <ProtectedRoute>
+                    <DiskManagement
+                      setRequiresRestart={setRequiresRestart}
                     />
-                  </ProtectedRoute>
-                } />
-              </Routes>
-            </Layout>
-          </Router>
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/water_level" element={
+                    <ProtectedRoute>
+                      <WaterLevel
+                        setRequiresRestart={setRequiresRestart}
+                      />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/callback_url" element={
+                    <ProtectedRoute>
+                      <CallbackUrl
+                        setRequiresRestart={setRequiresRestart}
+                      />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/camera_aim" element={
+                    <ProtectedRoute>
+                      <CameraAim />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/video" element={
+                    <ProtectedRoute>
+                      <ListVideo
+                        videoRunState={videoRunState}
+                      />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/time_series" element={
+                    <ProtectedRoute>
+                      <TimeSeries
+                      />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/video_config/:videoId" element={
+                    <ProtectedRoute>
+                      <VideoConfig
+                        devStatus={devStatus}
+                      />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/recipe" element={
+                    <ProtectedRoute>
+                      <ListRecipe />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/cross_section" element={
+                    <ProtectedRoute>
+                      <ListCrossSection />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/log" element={
+                    <ProtectedRoute>
+                      <Log />
+                    </ProtectedRoute>
+                  } />
+                  {devStatus && (
+                    <Route path="/services" element={
+                      <ProtectedRoute>
+                        <ServicesAdmin />
+                      </ProtectedRoute>
+                    } />
+                  )}
+                  <Route path="/services/:serviceId" element={
+                    <ProtectedRoute>
+                      <ServiceDetail
+                        devStatus={devStatus}
+                      />
+                    </ProtectedRoute>
+                  } />
+                </Routes>
+              </Layout>
+            </Router>
+          </LocaleProvider>
         </MessageProvider>
     )
 }

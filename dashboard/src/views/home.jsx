@@ -8,7 +8,8 @@ import {useMessage} from '../messageContext';
 import {listVideoCount} from "../utils/apiCalls/video.jsx";
 import {VideoDetails} from "./videoComponents/videoDetails.jsx";
 import {getCallbackUrl} from "../utils/apiCalls/callbackUrl.jsx";
-
+import { m } from '../paraglide/messages.js';
+import { useLocale } from '../utils/localeContext';
 import {Pie} from "react-chartjs-2";
 
 const Home = () => {
@@ -20,6 +21,7 @@ const Home = () => {
   const [videoConfig, setVideoConfig] = useState( null)
   const [waterLevel, setWaterLevel] = useState(false);
   const [lastVideo, setLastVideo] = useState(null);
+  const { locale, changeLocale } = useLocale();
   // set message box
   const {setMessageInfo} = useMessage();
 
@@ -198,14 +200,14 @@ const Home = () => {
       <div className="split-screen flex">
         <div className="flex-container column no-padding"  style={{height: "calc(100vh - 250px", minHeight: "723px"}}>
           <div className="flex-container column">
-            <h4>{!lastVideo ? ("Last video") : (
+            <h4>{!lastVideo ? (`${m.home_last_video()}`) : (
               `Last video taken ${lastVideo.timestamp}`
             )
             }</h4>
             <div className="flex-container row no-padding" style={{height: "calc(100vh - 330px"}}>
               {lastVideo ? (
                 <VideoDetails selectedVideo={lastVideo}/>
-              ) : "No data"
+              ) : `${m.home_no_data()}`
               }
             </div>
           </div>
