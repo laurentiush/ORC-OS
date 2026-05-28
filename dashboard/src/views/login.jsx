@@ -1,6 +1,5 @@
 // Login page for access to dashboard and back end
 import { useState, useEffect } from "react";
-import { useWindowSize } from "react-use";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/useAuth.jsx";
 import { m } from '../paraglide/messages.js';
@@ -16,10 +15,23 @@ const Login = ({ apiStatus }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passAvailable, setPassAvailable] = useState(true);
   const [error, setError] = useState("");
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
   const navigate = useNavigate();
   const { login, passwordAvailable, setNewPassword } = useAuth();
   const { width, height } = useWindowSize();
   const { locale, changeLocale } = useLocale();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   // upon entering the page, check if a password exists in the database
   useEffect(()  => {
     async function fetchPasswordAvailable() {
@@ -49,7 +61,7 @@ const Login = ({ apiStatus }) => {
 
   return (
     <div>
-    {!passAvailable && <Confetti width={width} height={height} />}
+    {!passAvailable && <Confetti width={windowSize.width} height={windowSize.height} />}
     <div className="spinner-container" style={{overflow: "hidden"}}>
       <p>OpenRiverCam-OS {apiStatus.release} v{apiStatus.version} </p>
       <div>

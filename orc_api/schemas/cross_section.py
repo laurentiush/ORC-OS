@@ -31,7 +31,7 @@ class CrossSectionBase(BaseModel):
     """Base model for a cross-section."""
 
     timestamp: Optional[datetime] = Field(
-        default=datetime.now(), description="Moment at which cross section was measured."
+        default_factory=lambda: datetime.now(), description="Moment at which cross section was measured."
     )
     name: Optional[str] = Field(default=None, description="Free recognizable description of cross section.")
     features: dict = Field(description="GeoJSON formatted features of the cross section.")
